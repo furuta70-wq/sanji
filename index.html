@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>言葉踊る - 固定上演</title>
+<title>言葉踊る</title>
 <style>
 html,body{
   margin:0;
@@ -171,7 +171,7 @@ h1{
     bag: [],
     active: [],
     nextSpawnAt: 0,
-    targetConcurrent: 9,
+    targetConcurrent: 3,
     lastTime: performance.now(),
     showRect: null,
     showPulse: 0,
@@ -234,9 +234,6 @@ h1{
   }
 
   const BACKDROP_FONT_FAMILY = '"Yu Gothic","Hiragino Kaku Gothic ProN","Meiryo",sans-serif';
-
-  const FIXED_LINES = ["こんにちは", "私の人生、思ったより順調 -_-b", "昔より今の方が楽しい", "困った時助けてくれてありがと", "み～んな幸せにな～れ！", "この世界に生まれて良かった", "こうした方がいいよ", "努力は裏切らない！！", "めっちゃ幸せ！！", "おつかれさまです！", "いつもありがとう", "幸せです", "今まで頑張ってきて、良かった", "好きだ！！", "生きてて　よかった", "幸せな人生だった。", "オレの車４７００万円の奴", "がんばって！", "とりあえず挑戦してみよう", "いい人生やった", "私に生まれてよかった！", "これにしてよかった", "ファ？", "これにしてよかった", "いつもありがとう", "今、この瞬間を大切に生きていこ", "ほんまに幸せ", "今、ほんまに幸せかみしめてるから", "がんばれ", "よ！！　私、安藤", "私、頑張ってきたよ、今まで", "やっぱり自分のことが好き", "今がベスト", "一応東大生です", "人を頼って、損はほぼないんだぜ？", "ここまで育ててくれて、ありがと", "超自由に生きてます", "過去も未来もクソくらえだ", "幸せ", "いろいろ苦労したけど　最終的にはなんとかなったよ", "素直に伝えること大事", "おれは　元気だ！！", "人生最高ー", "あきらめずにやってね", "ありがとう", "ありがとう", "育ててくれてありがとう", "みんなと生きれてよかった～", "ここは我のおごりだ", "ありがとう、これからもよろしく", "あきらめずにがんばって！！", "生きていればそれでじゅうぶんだ！！", "たかが人生、生きたもんがち！", "ありがとう、宝物。", "こうしたら良いんじゃない？", "生きてればどうにでもなる　頑張りすぎずまったり生きよう！", "大変で嫌なこともいっぱいあったけど総じて今すごく楽しいから、人生は宝物！", "お母さんと馬にありがとうって", "だいじょうぶ　何とかなるから！", "今の人生最高", "もう後悔することはない", "いつも、そばにいてくれてありがとう", "自分は環境に恵まれていたんだ　だけどそれに気づかず不幸だなんて言っていたんだ", "人間は完ぺきを望む生物　史上一醜い生物だ　ただ、それと同時に、希望を持てる最高の生物だ", "ここからここまでください　いっかつで", "大丈夫？", "今めっちゃ幸せ！！", "Peace for the world", "ありがとう！", "がんばってるね", "ありがとう", "今めっちゃ幸せやで！", "がんばって！", "君だけが君の人生の主人公！！", "がんばってよかった！", "ほんとうにありがとう！！", "後悔はない", "楽しかったな！！", "好きです！", "めっちゃいいやつやん", "人生楽しい！！", "けっこんしました", "最強になりました", "楽しんでる？", "元気です、幸せです、夢が、あります", "輝く虹のようになる", "未来の話　聞かせてよ", "私の誕生日はなべにして皆んなで酒を飲みませんか", "おつりいらないです", "高校卒業すること　ぼくの気持ちは……", "いつ見てもこのもみじはきれいだから"];
-  const FIXED_BACKDROP = "生きててよかった\nありがとう\n人生は宝物";
 
   function fitBackdropFontSize(text, targetWidth){
     const safeText = (text || "").trim();
@@ -409,10 +406,10 @@ h1{
 
   function chooseScene(now){
     const scenes = [
-      { key:"drift", duration:[14000,22000], concurrent:[6,9], gravityMul:1.0, upperBias:1.12 },
-      { key:"chorus", duration:[16000,24000], concurrent:[9,13], gravityMul:0.92, upperBias:1.25 },
-      { key:"reveal", duration:[9000,14000], concurrent:[4,7], gravityMul:0.84, upperBias:1.36 },
-      { key:"cascade", duration:[12000,18000], concurrent:[10,15], gravityMul:0.9, upperBias:1.45 }
+      { key:"drift", duration:[7000,12000], concurrent:[5,7], gravityMul:1.0, upperBias:1.15 },
+      { key:"chorus", duration:[6000,9000], concurrent:[6,8], gravityMul:0.92, upperBias:1.28 },
+      { key:"reveal", duration:[5000,8000], concurrent:[4,5], gravityMul:0.84, upperBias:1.35 },
+      { key:"cascade", duration:[4000,6500], concurrent:[6,8], gravityMul:0.9, upperBias:1.48 }
     ];
     const picked = scenes[Math.floor(Math.random() * scenes.length)];
     state.scene = picked.key;
@@ -425,7 +422,7 @@ h1{
 
   function maybeStartQuietAndHero(now){
     if(now < state.quietUntil || now < state.heroUntil) return;
-    if(Math.random() < 0.045){
+    if(Math.random() < 0.11){
       state.quietUntil = now + 1200 + Math.random() * 1800;
     }
   }
@@ -433,7 +430,7 @@ h1{
   function maybeAssignHero(now){
     if(now < state.quietUntil) return false;
     if(now < state.heroUntil) return false;
-    if(Math.random() < 0.22){
+    if(Math.random() < 0.18){
       state.heroUntil = now + 2200 + Math.random() * 1800;
       return true;
     }
@@ -444,9 +441,8 @@ h1{
     if(!textBlock || !textBlock.trim()) return [];
 
     const lines = textBlock
-      .replace(//g, "")
-      .split("
-")
+      .replace(/\r/g, "")
+      .split("\n")
       .map(v => v.trim())
       .filter(Boolean)
       .slice(0, 4);
@@ -454,54 +450,47 @@ h1{
     if(lines.length === 0) return [];
 
     const actors = [];
-    const centerY = H * 0.48;
-    const sizeRatios = [1, 0.60, 0.35, 0.24];
-    const backdropScale = 1.30;
-
-    const firstTargetWidth = W * 0.78;
-    const titleSize = fitBackdropFontSize(lines[0], firstTargetWidth) * 0.90 * backdropScale;
-    const sizes = lines.map((line, row) => row === 0 ? titleSize : titleSize * (sizeRatios[row] || 0.22));
-
-    const metrics = sizes.map((size, row) => ({
-      top: size * (row === 0 ? 0.47 : 0.43),
-      bottom: size * (row === 0 ? 0.40 : 0.36)
-    }));
-    const gaps = [];
-    for(let row = 1; row < lines.length; row++){
-      gaps[row] = Math.max(5, Math.min(sizes[row - 1], sizes[row]) * (row === 1 ? 0.10 : 0.13));
-    }
-
-    let blockHeight = metrics[0].top + metrics[0].bottom;
-    for(let row = 1; row < lines.length; row++) blockHeight += metrics[row - 1].bottom + gaps[row] + metrics[row].top;
-
-    const yPositions = [];
-    yPositions[0] = centerY - blockHeight / 2 + metrics[0].top;
-    for(let row = 1; row < lines.length; row++){
-      yPositions[row] = yPositions[row - 1] + metrics[row - 1].bottom + gaps[row] + metrics[row].top;
-    }
+    const totalRows = lines.length;
+    const centerY = H * 0.50;
+    const rowGap = H * 0.11;
 
     for(let row = 0; row < lines.length; row++){
       const line = lines[row];
       const chars = [...line];
+
       const isTitle = row === 0;
-      const size = sizes[row];
-      const rowY = yPositions[row];
+      const widthRatio = isTitle ? 0.78 : (chars.length <= 8 ? 0.64 : 0.84);
+      const targetWidth = W * widthRatio;
+      const sizeBase = fitBackdropFontSize(line, targetWidth);
+      const size = isTitle ? sizeBase * 0.90 : sizeBase * (0.82 - row * 0.05);
+      const rowY = centerY + (row - (totalRows - 1) / 2) * rowGap;
 
       ctx.save();
       ctx.font = `${size}px ${BACKDROP_FONT_FAMILY}`;
 
       const glyphs = [];
       let cursor = 0;
+
       for(let i = 0; i < chars.length; i++){
         const ch = chars[i];
         const w = ctx.measureText(ch).width;
-        glyphs.push({ ch, width: w, centerOffsetX: cursor + w / 2, phase: i * 0.22 + row * 0.8 });
+        glyphs.push({
+          ch,
+          width: w,
+          centerOffsetX: cursor + w / 2,
+          phase: i * 0.22 + row * 0.8
+        });
         cursor += w;
       }
+
       ctx.restore();
 
       const totalWidth = cursor;
-      const centeredGlyphs = glyphs.map(g => ({ ch: g.ch, offsetX: g.centerOffsetX - totalWidth / 2, phase: g.phase }));
+      const centeredGlyphs = glyphs.map(g => ({
+        ch: g.ch,
+        offsetX: g.centerOffsetX - totalWidth / 2,
+        phase: g.phase
+      }));
 
       actors.push({
         id: `bd-${row}`,
@@ -512,17 +501,17 @@ h1{
         y: rowY,
         baseX: W * 0.5,
         baseY: rowY,
-        vx: isTitle ? 0.0 : (row % 2 === 0 ? 2.6 : -2.2),
-        vy: 0,
+        vx: isTitle ? 0.0 : (row % 2 === 0 ? 4.5 : -4.0),
+        vy: isTitle ? 0.0 : (row - (totalRows - 1) / 2) * 0.22,
         size,
-        alpha: isTitle ? 0.18 : Math.max(0.052, 0.105 - row * 0.018),
-        sway: isTitle ? 2.5 : (3.6 + row * 1.2),
+        alpha: isTitle ? 0.16 : Math.max(0.06, 0.10 - row * 0.012),
+        sway: isTitle ? 2.5 : (6 + row * 2.5),
         driftPhase: row * 1.4,
         totalWidth,
-        waveAmp: isTitle ? 2.5 : (3.2 + row * 1.0),
-        waveFreq: isTitle ? 0.08 : (0.12 + row * 0.014),
+        waveAmp: isTitle ? 2.5 : (6 + row * 2.0),
+        waveFreq: isTitle ? 0.08 : (0.15 + row * 0.02),
         tighten: 0,
-        glowBoost: isTitle ? 1.15 : Math.max(0.86, 1.0 - row * 0.08),
+        glowBoost: isTitle ? 1.15 : 1.0,
         appear: 0,
         appearDelay: row * 0.22,
         driftReady: 0,
@@ -834,38 +823,33 @@ h1{
     });
   }
 
+  function classifyLineContent(line){
+    const normalized = line.replace(/\s+/g, "");
+    const len = [...line].length;
 
-  function classifyLine(line){
-    if(/[?？]$|大丈夫|楽しんでる|未来の話|ファ/.test(line)) return "question";
-    if(/ありがとう|ありがと|おつかれ|お疲れ|そばにいて|育てて/.test(line)) return "gratitude";
-    if(/幸せ|最高|楽しい|良かった|よかった|宝物|自由|順調|後悔はない|後悔することはない/.test(line)) return "happiness";
-    if(/がんば|頑張|挑戦|あきらめ|大丈夫|何とかなる|主人公|努力/.test(line)) return "cheer";
-    if(/好き|けっこん|結婚|よろしく/.test(line)) return "love";
-    if(/Peace|虹|未来|夢|希望|生まれて/.test(line)) return "future";
-    if(/東大|車|おごり|おつり|いっかつ|最強/.test(line)) return "spark";
-    return "life";
+    if(/(ありがとう|ありがと|おつかれ|お疲れ|育ててくれて|よろしく|宝物)/.test(line)) return "gratitude";
+    if(/(幸せ|最高|楽しい|楽しかった|良かった|よかった|順調|好き|生まれてよかった|Peace|虹)/i.test(line)) return "happiness";
+    if(/(がんば|頑張|あきらめ|挑戦|努力|大丈夫|だいじょうぶ|何とかなる|主人公|生きていれば|生きてれば)/.test(line)) return "encourage";
+    if(/(人生|生き|後悔|未来|今、この瞬間|過去も未来|希望|完ぺき|人間)/.test(line)) return "life";
+    if(/[？?]/.test(line) || /(どう|こうした|大丈夫|楽しんでる|聞かせて|ファ)/.test(line)) return "question";
+    if(/(東大|車|４７００万|けっこん|最強|卒業|誕生日|おつり|ここからここまで|おごり|馬|もみじ)/.test(line)) return "episode";
+    if(len <= 6) return "shortSpark";
+    return "neutral";
   }
 
-  function pickPersonaByCategory(category, rand){
-    if(category === "gratitude") return choice([PERSONAS[0], PERSONAS[2], PERSONAS[4]], rand);
-    if(category === "happiness") return choice([PERSONAS[0], PERSONAS[3], PERSONAS[1]], rand);
-    if(category === "cheer") return choice([PERSONAS[1], PERSONAS[3], PERSONAS[0]], rand);
-    if(category === "love") return choice([PERSONAS[3], PERSONAS[4], PERSONAS[0]], rand);
-    if(category === "question") return choice([PERSONAS[4], PERSONAS[1], PERSONAS[0]], rand);
-    if(category === "future") return choice([PERSONAS[0], PERSONAS[2], PERSONAS[3]], rand);
-    if(category === "spark") return choice([PERSONAS[1], PERSONAS[3], PERSONAS[2]], rand);
-    return choice(PERSONAS, rand);
-  }
+  const CONTENT_STYLES = {
+    gratitude:  { color:"#ffe3b3", lifeMul:0.92, sizeMul:0.96, densityRole:"warm",     shapeBoost:["softArc","shallowArc","ellipseWave"],     swimBoost:["breath","float","halo"] },
+    happiness:  { color:"#fff09c", lifeMul:1.00, sizeMul:1.02, densityRole:"bright",   shapeBoost:["fanArc","wave","openRing"],             swimBoost:["hop","ribbon","comet"] },
+    encourage:  { color:"#cfe4ff", lifeMul:0.96, sizeMul:1.00, densityRole:"forward",  shapeBoost:["line","bigArc","verticalWave"],         swimBoost:["dash","zigzag","ribbon"] },
+    life:       { color:"#d8f6d2", lifeMul:1.12, sizeMul:1.04, densityRole:"deep",     shapeBoost:["grandCircleArc","verticalSoftArc","leaningColumn"], swimBoost:["glide","orbit","breath"] },
+    question:   { color:"#e8d9ff", lifeMul:0.98, sizeMul:1.00, densityRole:"question", shapeBoost:["verticalWave","zigArc","spiralArc"],      swimBoost:["flutter","pendulum","orbit"] },
+    episode:    { color:"#ffd4ea", lifeMul:1.06, sizeMul:1.03, densityRole:"scene",    shapeBoost:["doubleWave","canyonWave","openRing"],    swimBoost:["flutter","comet","zigzag"] },
+    shortSpark: { color:"#ffffff", lifeMul:0.82, sizeMul:1.10, densityRole:"spark",    shapeBoost:["verticalLine","shallowArc","fanArc"],    swimBoost:["flutter","hop","halo"] },
+    neutral:    { color:null,      lifeMul:1.00, sizeMul:1.00, densityRole:"neutral",  shapeBoost:["line","softArc"],                       swimBoost:["float","glide"] }
+  };
 
-  function colorForCategory(category, fallback){
-    if(category === "gratitude") return "#fff0d9";
-    if(category === "happiness") return "#fff6b8";
-    if(category === "cheer") return "#dff6ff";
-    if(category === "love") return "#ffe0f0";
-    if(category === "question") return "#e8f1ff";
-    if(category === "future") return "#e5ffe6";
-    if(category === "spark") return "#ffd9ad";
-    return fallback;
+  function getContentStyle(line){
+    return CONTENT_STYLES[classifyLineContent(line)] || CONTENT_STYLES.neutral;
   }
 
   function analyzeLineMood(line){
@@ -876,13 +860,15 @@ h1{
     const soft = (line.match(/[\u3040-\u309F]/g) || []).length;
     const hard = (line.match(/[\u4E00-\u9FFF々〆ヶ]/g) || []).length;
 
+    const contentClass = classifyLineContent(line);
     return {
       short: len <= 7,
       question: q,
       exclaim: ex,
       pause: dots,
       softness: soft / Math.max(1, len),
-      hardness: hard / Math.max(1, len)
+      hardness: hard / Math.max(1, len),
+      contentClass
     };
   }
   function validateInput(raw){
@@ -902,7 +888,37 @@ h1{
   }
   function takeRandomLine(){
     if(state.bag.length === 0) refillBag();
-    return state.bag.pop();
+    if(state.bag.length <= 1) return state.bag.pop();
+
+    const activeCounts = {};
+    for(const s of state.active){
+      const cls = s.contentClass || "neutral";
+      activeCounts[cls] = (activeCounts[cls] || 0) + 1;
+    }
+
+    let bestBagIndex = state.bag.length - 1;
+    let bestScore = -Infinity;
+    const tries = Math.min(14, state.bag.length);
+
+    for(let k=0;k<tries;k++){
+      const i = Math.floor(Math.random() * state.bag.length);
+      const item = state.bag[i];
+      const cls = classifyLineContent(item.line);
+      const len = [...item.line].length;
+      let score = Math.random();
+      score -= (activeCounts[cls] || 0) * 2.5;
+      if(cls === "episode" || cls === "life") score += 0.55;
+      if(len <= 6 && (activeCounts.shortSpark || 0) > 0) score -= 1.2;
+      if(len >= 18) score += 0.35;
+      if(score > bestScore){
+        bestScore = score;
+        bestBagIndex = i;
+      }
+    }
+
+    const picked = state.bag[bestBagIndex];
+    state.bag.splice(bestBagIndex, 1);
+    return picked;
   }
   function scorePoint(x, y, now){
     let score = 0;
@@ -1542,12 +1558,12 @@ h1{
     const { line, index } = lineObj;
     const seed = hashString(`${index}:${line}:${Date.now()}:${Math.random()}`);
     const rand = mulberry32(seed);
-    const category = classifyLine(line);
-    const persona = pickPersonaByCategory(category, rand);
     const mood = analyzeLineMood(line);
-    const fontBase = getFontBase(line, mood, rand);
+    const contentStyle = getContentStyle(line);
+    const persona = choice(PERSONAS, rand);
+    const fontBase = getFontBase(line, mood, rand) * contentStyle.sizeMul;
     let center = chooseCenter(performance.now());
-    const life = randRange(rand, 6.6, 10.5) + (category === "gratitude" || category === "happiness" ? 0.8 : 0);
+    const life = randRange(rand, 7.0, 8.0) * contentStyle.lifeMul;
     const characterEmphasis = buildCharacterEmphasis(line, mood, rand);
 
     for(const v of state.recentVoices){
@@ -1598,17 +1614,13 @@ h1{
 
     const relationStyle = choiceWeighted(rand, relationStyles);
 
-    let shapePool = [...persona.shapes];
+    let shapePool = [...persona.shapes, ...contentStyle.shapeBoost, ...contentStyle.shapeBoost];
     if([...line].length <= 7 || mood.pause || persona.key === "solemn"){
       shapePool.push("verticalLine", "verticalSoftArc", "leaningColumn");
     }
     if(mood.question || mood.exclaim){
-      shapePool.push("verticalWave", "fanArc", "canyonWave", "spiralArc");
+      shapePool.push("verticalWave", "fanArc", "canyonWave");
     }
-    if(category === "gratitude") shapePool.push("softArc", "bigArc", "fanArc");
-    if(category === "happiness" || category === "spark") shapePool.push("spiralArc", "openRing", "doubleWave");
-    if(category === "cheer") shapePool.push("verticalWave", "canyonWave", "fanArc");
-    if(category === "future") shapePool.push("grandCircleArc", "openRing", "ellipseWave");
     if(mood.short && rand() < 0.5){
       shapePool.push("verticalLine", "shallowArc");
     }
@@ -1631,7 +1643,7 @@ h1{
 
     const shapeName = choice(shapePool, rand);
     const lineTargets = makeReadablePath(line, fontBase, rand, shapeName);
-    const preMode = choice(persona.swims, rand);
+    const preMode = choice([...persona.swims, ...contentStyle.swimBoost], rand);
     const preTargets = buildPreTargets(line, fontBase, rand, preMode);
     const entranceType = choice(persona.entrances, rand);
     const entrance = buildEntrance(rand, entranceType, center, fontBase);
@@ -1679,9 +1691,10 @@ h1{
       age: 0,
       opacity: 0,
       fontBase,
-      color: colorForCategory(category, persona.color),
-      category,
+      color: contentStyle.color || persona.color,
       persona,
+      contentStyle,
+      contentClass: mood.contentClass,
       chars,
       preTargets,
       lineTargets,
@@ -1769,8 +1782,9 @@ h1{
       state.backdropActors = createBackdropActors(state.backdropText);
     }
     chooseScene(now);
-    for(let i = 0; i < 7; i++) spawnOne(now + i * 7);
-    state.nextSpawnAt = now + 120;
+    spawnOne(now);
+    spawnOne(now + 1);
+    state.nextSpawnAt = now + 220;
   }
 
   function spawnOne(now){
@@ -1790,7 +1804,7 @@ h1{
     }
 
     state.active.push(speech);
-    state.nextSpawnAt = now + 90 + Math.random() * 330;
+    state.nextSpawnAt = now + 80 + Math.random() * 300;
   }
 
   function applySpeechSocialForce(s, dt, now){
@@ -2200,17 +2214,22 @@ h1{
       if(now >= state.sceneUntil) chooseScene(now);
 
       if(Math.random() < 0.004){
-        state.targetConcurrent = clamp(state.targetConcurrent + (Math.random() < 0.5 ? -1 : 1), 5, 15);
+        state.targetConcurrent = clamp(state.targetConcurrent + (Math.random() < 0.5 ? -1 : 1), 4, 9);
       }
 
       maybeStartQuietAndHero(now);
       updateBackdropActors(dt, now);
       updateBackdropParticles(dt);
 
-      if(now >= state.quietUntil && state.active.length < state.targetConcurrent && now >= state.nextSpawnAt){
-        spawnOne(now);
-        if(state.scene === "cascade" && state.active.length < state.targetConcurrent && Math.random() < 0.42){
-          spawnOne(now + 1);
+      if(now >= state.quietUntil && now >= state.nextSpawnAt){
+        const overlapLimit = state.targetConcurrent + 2;
+        if(state.active.length < overlapLimit){
+          spawnOne(now);
+          if(state.active.length < state.targetConcurrent && Math.random() < 0.42){
+            spawnOne(now + 1);
+          }
+        } else {
+          state.nextSpawnAt = now + 90 + Math.random() * 240;
         }
       }
 
@@ -2302,40 +2321,126 @@ h1{
     requestAnimationFrame(loop);
   }
 
-  const PRESET_TEXT = '生きるべきか、死ぬべきか、それが問題だ\n友よ、ローマ市民よ、同胞よ、どうか耳を貸してくれ\nこの世はすべて舞台、人はみな役者にすぎない\n地獄とは他人のことだ\nきちんと向き合わねばならない\n知らざあ言って聞かせやしょう\n問われて名乗るもおこがましいが\nこいつぁ春から縁起がええわぇ\n鍵は閉めなくていい、どうせ出ていくのは私だから\n拍手って、赦しの代わりにはならないんだよ\nそういうところだけ、昔のままだね\n終電はもうない\n世界を変える話じゃないよ\n好きだった、たぶん今も\n私たち、不幸になるために会ったわけじゃない\n待って\n昔の話していい？\n今日の私は強いよ\n別れ話って、もっと派手だと思ってた\n夢を諦めたんじゃない、順番を、譲っただけ\nあなたの「いつか」って、だいたい私がいない日だね\nごめん\n欲しかったの\n他人みたいに優しくしないで\n私はちゃんと見てたよ\n弱くてもいいじゃない\n先に食べてていいよ\n今日のコーヒー、なんか妙に当たりじゃない？\nその服いいね\nそれ私も気になってた\nまあそういう日もあるか\n返事ないけどたぶん起きてるよね\n笑うほどじゃないけどちょっと好きだな\n今日の夕飯どうする？\n目覚ましって裏切るよね\n部活ある日は、帰り道までちょっと青春っぽい\nじゃあまた明日、って言えるのけっこう好き\nこういう日も嫌いじゃないけど\n無理に元気なふりしなくていい年齢でしょう、もう\nお疲れ様ー！\n弁当、また唐揚げ？\n駅まで送るよ\nずっと既読だけついてるの何\nしょまごって…何？\n体育のあとに６限って無理じゃない？\nいや、今ちょっと迷ったでしょ\nすべての幸福な家庭は似ている\n大きいものと小さいものがある\nぼくは透明人間だ\n恥の多い生涯を送って来ました\nメロスは激怒した\n智に働けば角が立つ\nそれは最高の時代であり、最悪の時代でもあった';
+  const FIXED_LINES = [
+    "こんにちは",
+    "私の人生、思ったより順調 -_-b",
+    "昔より今の方が楽しい",
+    "困った時助けてくれてありがと",
+    "み～んな幸せにな～れ！",
+    "この世界に生まれて良かった",
+    "こうした方がいいよ",
+    "努力は裏切らない！！",
+    "めっちゃ幸せ！！",
+    "おつかれさまです！",
+    "いつもありがとう",
+    "幸せです",
+    "今まで頑張ってきて、良かった",
+    "好きだ！！",
+    "生きてて　よかった",
+    "幸せな人生だった。",
+    "オレの車４７００万円の奴",
+    "がんばって！",
+    "とりあえず挑戦してみよう",
+    "いい人生やった",
+    "私に生まれてよかった！",
+    "これにしてよかった",
+    "ファ？",
+    "これにしてよかった",
+    "いつもありがとう",
+    "今、この瞬間を大切に生きていこ",
+    "ほんまに幸せ",
+    "今、ほんまに幸せかみしめてるから",
+    "がんばれ",
+    "よ！！　私、安藤",
+    "私、頑張ってきたよ、今まで",
+    "やっぱり自分のことが好き",
+    "今がベスト",
+    "一応東大生です",
+    "人を頼って、損はほぼないんだぜ？",
+    "ここまで育ててくれて、ありがと",
+    "超自由に生きてます",
+    "過去も未来もクソくらえだ",
+    "幸せ",
+    "いろいろ苦労したけど　最終的にはなんとかなったよ",
+    "素直に伝えること大事",
+    "おれは　元気だ！！",
+    "人生最高ー",
+    "あきらめずにやってね",
+    "ありがとう",
+    "ありがとう",
+    "育ててくれてありがとう",
+    "みんなと生きれてよかった～",
+    "ここは我のおごりだ",
+    "ありがとう、これからもよろしく",
+    "あきらめずにがんばって！！",
+    "生きていればそれでじゅうぶんだ！！",
+    "たかが人生、生きたもんがち！",
+    "ありがとう、宝物。",
+    "こうしたら良いんじゃない？",
+    "生きてればどうにでもなる　頑張りすぎずまったり生きよう！",
+    "大変で嫌なこともいっぱいあったけど総じて今すごく楽しいから、人生は宝物！",
+    "お母さんと馬にありがとうって",
+    "だいじょうぶ　何とかなるから！",
+    "今の人生最高",
+    "もう後悔することはない",
+    "いつも、そばにいてくれてありがとう",
+    "自分は環境に恵まれていたんだ　だけどそれに気づかず不幸だなんて言っていたんだ",
+    "人間は完ぺきを望む生物　史上一醜い生物だ　ただ、それと同時に、希望を持てる最高の生物だ",
+    "ここからここまでください　いっかつで",
+    "大丈夫？",
+    "今めっちゃ幸せ！！",
+    "Peace for the world",
+    "ありがとう！",
+    "がんばってるね",
+    "ありがとう",
+    "今めっちゃ幸せやで！",
+    "がんばって！",
+    "君だけが君の人生の主人公！！",
+    "がんばってよかった！",
+    "ほんとうにありがとう！！",
+    "後悔はない",
+    "楽しかったな！！",
+    "好きです！",
+    "めっちゃいいやつやん",
+    "人生楽しい！！",
+    "けっこんしました",
+    "最強になりました",
+    "楽しんでる？",
+    "元気です、幸せです、夢が、あります",
+    "輝く虹のようになる",
+    "未来の話　聞かせてよ",
+    "私の誕生日はなべにして皆んなで酒を飲みませんか",
+    "おつりいらないです",
+    "高校卒業すること　ぼくの気持ちは……",
+    "いつ見てもこのもみじはきれいだから"
+];
 
-  function startPreset(){
-    textInput.value = PRESET_TEXT;
-    const checked = validateInput(PRESET_TEXT);
-    if(!checked.ok){
-      message.textContent = checked.message;
-      return;
-    }
-    state.lines = checked.lines;
-    state.backdropText = backdropInput.value.trim();
-    state.backdropActors = createBackdropActors(state.backdropText);
-    refillBag();
-    state.active = [];
-    state.phase = "ready";
-    message.textContent = "";
-    inputScreen.style.display = "none";
-    playScreen.style.display = "block";
-  }
-
-  function startFixedShow(){
+  function startFixedTextShow(){
     state.lines = FIXED_LINES.slice();
-    state.backdropText = FIXED_BACKDROP;
-    state.backdropActors = createBackdropActors(state.backdropText);
-    refillBag();
+    state.backdropText = "";
+    state.backdropActors = [];
+    state.backdropParticles = [];
     state.active = [];
+    state.echoes = [];
+    state.recentVoices = [];
     state.phase = "playing";
+    refillBag();
+    const startNow = performance.now();
+    chooseScene(startNow);
+    spawnOne(startNow);
+    spawnOne(startNow + 1);
+    spawnOne(startNow + 2);
+    spawnOne(startNow + 3);
+    spawnOne(startNow + 4);
+    state.nextSpawnAt = startNow + 120;
     inputScreen.style.display = "none";
     playScreen.style.display = "block";
-    const now = performance.now();
-    beginPlay(now);
   }
 
-  startFixedShow();
+  window.addEventListener("load", () => {
+    startFixedTextShow();
+  });
+
   requestAnimationFrame(loop);
 })();
 </script>
